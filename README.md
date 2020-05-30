@@ -1,4 +1,4 @@
-# SML Box Exporter
+# Smlbox.net IPTV Playlist Uploader
 
 Загружает плейлисты в `XSPF` и `M3U` форматах на [smlbox.net](http://www.smlbox.net/)
 
