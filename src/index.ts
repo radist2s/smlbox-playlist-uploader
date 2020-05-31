@@ -8,6 +8,7 @@ import iptvPlaylistParser from 'iptv-playlist-parser'
 export interface DotEnvConfig {
     playlist_xspf?: string
     playlist_m3u?: string
+    sml_box_baseurl: string
     sml_cookie_username: string
     sml_cookie_password: string
     replacements?: string
@@ -20,7 +21,7 @@ export interface Channel {
 
 export const env = (config().parsed as any) as DotEnvConfig
 
-export const smlBoxBaseUrl = 'http://www.smlbox.net' // no trailing slash
+export const smlBoxBaseUrl = env.sml_box_baseurl // no trailing slash
 
 export const smlBoxUrls = {
     add: `${smlBoxBaseUrl}/channel/add`,
