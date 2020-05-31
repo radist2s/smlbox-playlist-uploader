@@ -1,12 +1,13 @@
 {
   "name": "smlbox-playlist-uploader",
-  "version": "1.0.2",
+  "version": "1.0.5",
   "main": "dist/index.js",
+  "bin": "dist/bin.js",
   "license": "MIT",
   "repository": "https://github.com/radist2s/smlbox-playlist-uploader",
   "scripts": {
-    "dev": "ts-node src/index.ts",
-    "start": "node dist/index.js",
+    "dev": "ts-node src/bin.ts",
+    "start": "node dist/bin.js",
     "build": "tsc --build",
     "prepack": "tsc --build"
   },

@@ -7,24 +7,27 @@
 #### Установка
 Установите [node.js](https://nodejs.org/).
 
-В новой директории выполните команду в терминале:
+Выполните команду в терминале:
 ```
-npm install smlbox-playlist-uploader
+npm install -g smlbox-playlist-uploader
 ```
 
-После установки модуля, переименуйте файл `.env.example` в `.env` и отредактируйте его значения, согласно комментариям в нем.
+В удобной для вас директории создайте файл `.env`, скопируйте в него содержимое из файла по ссылке: [.env.example](https://raw.githubusercontent.com/radist2s/smlbox-playlist-uploader/master/.env.example)
+
+Отредактируйте значения в `.env`-файле, согласно комментариям из него.
 
 В файле `.env` для переменных `sml_cookie_username` и `sml_cookie_password` необходимо использовать оригинальные значение cookies, которые устанавливает [smlbox.net](http://www.smlbox.net/) в вашем браузере после авторизации на сайте сервиса (`username` и `password` соответственно). Использование имени пользователя и пароля вместо значений из `cookies` недопустимо.
 
 #### Загрузка каналов из плейлиста
+Необходимо выполнять команды из той директории, в которой находится ваш `.env`-файл с настройками.
 ```
-npm run start --upload
+smlbox-playlist-uploader --upload
 ```
 #### Удаление всех каналов
 ```
-npm run start --delete
+smlbox-playlist-uploader --delete
 ```
 #### Удаление всех каналов и последующая загрузка
 ```
-npm run start --delete --upload
+smlbox-playlist-uploader --delete --upload
 ```

@@ -6,12 +6,12 @@ import cheerio from 'cheerio'
 import iptvPlaylistParser from 'iptv-playlist-parser'
 
 export interface DotEnvConfig {
-    playlist_xspf?: string
-    playlist_m3u?: string
-    sml_box_baseurl: string
+    sml_source_playlist_xspf?: string
+    sml_source_playlist_m3u?: string
+    sml_baseurl: string
     sml_cookie_username: string
     sml_cookie_password: string
-    replacements?: string
+    sml_replacements?: string
 }
 
 export interface Channel {
@@ -21,7 +21,7 @@ export interface Channel {
 
 export const env = (config().parsed as any) as DotEnvConfig
 
-export const smlBoxBaseUrl = env.sml_box_baseurl // no trailing slash
+export const smlBoxBaseUrl = env?.sml_baseurl // no trailing slash
 
 export const smlBoxUrls = {
     add: `${smlBoxBaseUrl}/channel/add`,
@@ -38,8 +38,8 @@ export async function fetchSmlBoxUrl(url: string) {
 }
 
 export async function downloadM3UPlaylist(): Promise<Channel[]> {
-    if (!env.playlist_m3u) {
-        const playlist_m3u_var: keyof Pick<DotEnvConfig, 'playlist_m3u'> = 'playlist_m3u'
+    if (!env.sml_source_playlist_m3u) {
+        const playlist_m3u_var: keyof Pick<DotEnvConfig, 'sml_source_playlist_m3u'> = 'sml_source_playlist_m3u'
 
         throw new Error(`Specify \`${playlist_m3u_var}\` URL in your \`.env\` file`)
     }
@@ -61,15 +61,15 @@ export async function downloadM3UPlaylist(): Promise<Channel[]> {
 }
 
 export async function downloadProviderPlaylist() {
-    if (env.playlist_m3u) {
+    if (env.sml_source_playlist_m3u) {
         return await downloadM3UPlaylist()
-    } else if (env.playlist_xspf) {
+    } else if (env.sml_source_playlist_xspf) {
         return await downloadXSPFPlaylist()
     }
 
-    const mustExistsEnvVars: (keyof Pick<DotEnvConfig, 'playlist_m3u' | 'playlist_xspf'>)[] = [
-        'playlist_m3u',
-        'playlist_xspf'
+    const mustExistsEnvVars: (keyof Pick<DotEnvConfig, 'sml_source_playlist_m3u' | 'sml_source_playlist_xspf'>)[] = [
+        'sml_source_playlist_m3u',
+        'sml_source_playlist_xspf'
     ]
 
     throw new Error(
@@ -80,13 +80,13 @@ export async function downloadProviderPlaylist() {
 }
 
 export async function downloadXSPFPlaylist(): Promise<Channel[]> {
-    if (!env.playlist_xspf) {
-        const playlist_xspf_var: keyof Pick<DotEnvConfig, 'playlist_xspf'> = 'playlist_xspf'
+    if (!env.sml_source_playlist_xspf) {
+        const playlist_xspf_var: keyof Pick<DotEnvConfig, 'sml_source_playlist_xspf'> = 'sml_source_playlist_xspf'
 
         throw new Error(`Specify \`${playlist_xspf_var}\` URL in your \`.env\` file`)
     }
 
-    const playlistResponse = await fetch(env.playlist_xspf)
+    const playlistResponse = await fetch(env.sml_source_playlist_xspf)
 
     if (playlistResponse.status >= 400) {
         throw new Error(`${playlistResponse.status}, ${playlistResponse.statusText}`)
@@ -132,7 +132,7 @@ export function getSmlBoxCookies() {
 }
 
 export function getPlaylistToSmlBoxChannelReplacements(): {[key: string]: string} {
-    const replaces = env.replacements?.split(';').reduce(function (channels, replacementPair) {
+    const replaces = env.sml_replacements?.split(';').reduce(function (channels, replacementPair) {
         const [source, replacement] = replacementPair.split('=')
 
         if (!source || !replacement) {
@@ -310,10 +310,4 @@ export async function main() {
             printExceptionError(e)
         }
     }
-}
-
-const isDirectCLIExecution = typeof process !== 'undefined' && process.argv[1] === __filename
-
-if (isDirectCLIExecution) {
-    main()
 }
