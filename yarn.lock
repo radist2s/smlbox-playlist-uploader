@@ -227,9 +227,10 @@ nth-check@~1.0.1:
   dependencies:
     boolbase "~1.0.0"
 
-"object-query-string@https://github.com/radist2s/node-object-query-string.git":
+object-query-string@^1.1.1:
   version "1.1.1"
-  resolved "https://github.com/radist2s/node-object-query-string.git#bddb681f27ae85dd1e3d23d08199cc9e4417d0ea"
+  resolved "https://registry.yarnpkg.com/object-query-string/-/object-query-string-1.1.1.tgz#c502cb6667ee5d2f226ef15a54e9e4a0860c079d"
+  integrity sha512-1IyHCQM9jGogdweTinXPic9aqpzFfcfYWMu9C1Rc13mbZLp0kHy8jm6UAgsBbar6dhUwhqGBt+ntZc/iISE6aA==
 
 parse5@^3.0.1:
   version "3.0.3"
