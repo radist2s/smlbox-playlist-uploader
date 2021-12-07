@@ -1,6 +1,6 @@
 {
   "name": "smlbox-playlist-uploader",
-  "version": "1.0.6",
+  "version": "1.0.7",
   "main": "dist/index.js",
   "bin": "dist/bin.js",
   "license": "MIT",

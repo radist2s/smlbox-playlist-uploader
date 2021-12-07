@@ -44,7 +44,7 @@ export async function downloadM3UPlaylist(): Promise<Channel[]> {
         throw new Error(`Specify \`${playlist_m3u_var}\` URL in your \`.env\` file`)
     }
 
-    const playlistResponse = await fetch('http://list.setitagilatv.ru/list.m3u')
+    const playlistResponse = await fetch(env.sml_source_playlist_m3u)
 
     if (playlistResponse.status >= 400) {
         throw new Error(`${playlistResponse.status}, ${playlistResponse.statusText}`)
